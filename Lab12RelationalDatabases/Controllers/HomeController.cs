@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lab12RelationalDatabases.Controllers
 {
+    /// <summary>
+    /// This is the controller and communicates with Index() so the user can see a view
+    /// </summary>
     public class HomeController : Controller
     {
         public IActionResult Index()
