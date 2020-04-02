@@ -13,6 +13,15 @@ namespace Lab12RelationalDatabases.Data
             
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<HotelRoom>().HasKey(x => new { x.HotelID, //more stuff here})
+        }
+        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<HotelRoom> HotelRooms { get; set; }
+        public DbSet<Amenities> Amenities { get; set; }
+        public DbSet<RoomAmenities> RoomAmenities { get; set; }
 
     }
 }
