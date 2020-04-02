@@ -7,6 +7,7 @@ namespace Lab12RelationalDatabases.Models
 {
     public class RoomAmenities
     {
+        //Composite keys as well as Foreign keys
         public string AmenitiesID { get; set; }
         public int RoomID { get; set; }
     
