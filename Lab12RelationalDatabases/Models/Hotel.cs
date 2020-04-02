@@ -13,8 +13,16 @@ namespace Lab12RelationalDatabases.Models
 
         public string StreetAddress { get; set; }
 
+        public string City { get; set; }
 
-        //Navigation Property
+        public string State { get; set; }
 
+        public string Phone { get; set; }
+
+
+
+        //Navigation Property: HotelRoom
+
+        public HotelRoom HotelRoom { get; set; }
     }
 }

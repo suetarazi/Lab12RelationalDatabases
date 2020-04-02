@@ -8,20 +8,20 @@ namespace Lab12RelationalDatabases.Models
     public class HotelRoom
     {
         //composite key
-        int HotelID
+            public int HotelID { get; set; }
 
-            int RoomID
+            public int RoomID { get; set; }
 
-            //regular table info?
-            int RoomNumber
+            //regular table info
+            public int RoomNumber { get; set; }
 
-            bool PetFriendly
+            public bool PetFriendly { get; set; }
 
-            decimal Rate
+            public decimal Rate { get; set; }
 
+
+        //navigation - has 2 foreign keys
+         public Hotel Hotel { get; set; }
+        public Room Room { get; set; }
     }
-
-    //navigation - has 2 foreign keys
-    public Hotel Hotel { get; set; }
-    public Room Room { get; set; }
 }

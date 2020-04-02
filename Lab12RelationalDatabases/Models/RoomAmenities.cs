@@ -7,13 +7,14 @@ namespace Lab12RelationalDatabases.Models
 {
     public class RoomAmenities
     {
-        public int RoomID { get; set; }
         public string AmenitiesID { get; set; }
+        public int RoomID { get; set; }
     
-        //Nav props
+     
+        //Navigation properties
 
-        public Room Room { get; set; }
         public Amenities Amenities { get; set; }
+        public Room Room { get; set; }
     }
 
     
