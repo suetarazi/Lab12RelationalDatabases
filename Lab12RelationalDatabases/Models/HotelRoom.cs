@@ -10,10 +10,10 @@ namespace Lab12RelationalDatabases.Models
         //composite key
             public int HotelID { get; set; }
 
-            public int RoomID { get; set; }
+            public int RoomNumber { get; set; }
 
             //regular table info
-            public int RoomNumber { get; set; }
+            public int RoomID { get; set; }
 
             public bool PetFriendly { get; set; }
 

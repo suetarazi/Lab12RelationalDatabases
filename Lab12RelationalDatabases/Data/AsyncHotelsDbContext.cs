@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Lab12RelationalDatabases.Models;
 
 namespace Lab12RelationalDatabases.Data
 {
@@ -13,10 +14,14 @@ namespace Lab12RelationalDatabases.Data
             
         }
 
+        //Declare certain keys as foreign keys
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<HotelRoom>().HasKey(x => new { x.HotelID, //more stuff here})
+            modelBuilder.Entity<HotelRoom>().HasKey(x => new { x.HotelID, x.RoomID });
+            modelBuilder.Entity<RoomAmenities>().HasKey(ra => new { ra.AmenitiesID, ra.RoomID });
         }
+
+        //Refer to each table created
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }

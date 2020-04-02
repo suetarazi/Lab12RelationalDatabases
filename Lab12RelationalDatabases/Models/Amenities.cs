@@ -13,6 +13,6 @@ namespace Lab12RelationalDatabases.Models
 
 
         //Navigation property
-        public RoomAmenities RoomAmenities { get; set; }
+        public ICollection<RoomAmenities> RoomAmenities { get; set; }
     }
 }
