@@ -11,7 +11,7 @@ This app is a hotel room database service built to serve a national hotel chain.
 
 ## Structure
 
-[database structure](https://i.imgur.com/qvQPf7A.png)
+![database structure](https://i.imgur.com/qvQPf7A.png)
 
 #### Main Tables:
 **Hotel** - different locations across the country.
