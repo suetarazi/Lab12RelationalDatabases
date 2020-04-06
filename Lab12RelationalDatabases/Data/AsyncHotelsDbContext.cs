@@ -19,6 +19,141 @@ namespace Lab12RelationalDatabases.Data
         {
             modelBuilder.Entity<HotelRoom>().HasKey(x => new { x.HotelID, x.RoomID });
             modelBuilder.Entity<RoomAmenities>().HasKey(ra => new { ra.AmenitiesID, ra.RoomID });
+
+            //Seeding data
+            modelBuilder.Entity<Hotel>().HasData(
+                new Hotel
+                {
+                    ID = 1,
+                    Name = "Seattle Async",
+                    StreetAddress = "443 3rd Ave",
+                    City = "Seattle",
+                    State = "Washington",
+                    Phone = "206-555-4509"
+                },
+                new Hotel
+                {
+                    ID = 2,
+                    Name = "Maui Async",
+                    StreetAddress = "445 Ka'anapali Blvd",
+                    City = "Maui",
+                    State = "Hawaii",
+                    Phone = "808-555-4510"
+                },
+                new Hotel
+                {
+                    ID = 3,
+                    Name = "Dubuque Async",
+                    StreetAddress = "447 7th Ave",
+                    City = "Dubuque",
+                    State = "Iowa",
+                    Phone = "563-555-4511"
+                },
+                new Hotel
+                {
+                    ID = 4,
+                    Name = "Steamboat Springs Async",
+                    StreetAddress = "449 9th Ave",
+                    City = "Steamboat Springs",
+                    State = "Colorado",
+                    Phone = "970-555-4513"
+                },
+                new Hotel
+                {
+                    ID = 5,
+                    Name = "Santa Monica Async",
+                    StreetAddress = "451 Santa Monica Blvd",
+                    City = "Santa Monica",
+                    State = "California",
+                    Phone = "310-555-4509"
+                }
+                );
+
+            modelBuilder.Entity<Room>().HasData(
+                new Room
+                {
+                    ID = 1,
+                    Name = "Studio",
+                    Layout = (Layout)0
+                },
+                new Room
+                {
+                    ID = 2,
+                    Name = "One Bedroom",
+                    Layout = (Layout)1
+                },
+                new Room
+                {
+                    ID = 3,
+                    Name = "Two Bedroom",
+                    Layout = (Layout)2
+                },
+                new Room
+                {
+                    ID = 4,
+                    Name = "Studio (ADA Compliant)",
+                    Layout = (Layout)3
+                },
+                new Room
+                {
+                    ID = 5,
+                    Name = "One Bedroom (ADA Compliant)",
+                    Layout = (Layout)4
+                },
+                new Room
+                {
+                    ID = 6,
+                    Name = "Two Bedroom (ADA Compliant)",
+                    Layout = (Layout)5
+                }
+                );
+
+            modelBuilder.Entity<Amenities>().HasData(
+                new Amenities
+                {
+                    ID = 1,
+                    Name = "Coffee Maker"
+                },
+                new Amenities
+                {
+                    ID = 2,
+                    Name = "Minifridge"
+                },
+                new Amenities
+                {
+                    ID = 3,
+                    Name = "Minibar"
+                },
+                new Amenities
+                {
+                    ID = 4,
+                    Name = "Balcony"
+                },
+                new Amenities
+                {
+                    ID = 5,
+                    Name = "Waterfront View"
+                }
+                );
+
+            modelBuilder.Entity<HotelRoom>().HasData(
+                new HotelRoom
+                {
+                    HotelID = 1,
+                    RoomID = 2,
+                    RoomNumber = 503,
+                    Rate = 200,
+                    PetFriendly = true
+                },
+                new HotelRoom
+                {
+                    HotelID = 3,
+                    RoomID = 1,
+                    RoomNumber = 404,
+                    Rate = 180,
+                    PetFriendly = false
+                }
+                );
         }
 
         //Refer to each table created
