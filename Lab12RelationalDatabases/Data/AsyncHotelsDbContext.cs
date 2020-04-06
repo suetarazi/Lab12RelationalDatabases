@@ -20,7 +20,7 @@ namespace Lab12RelationalDatabases.Data
             modelBuilder.Entity<HotelRoom>().HasKey(x => new { x.HotelID, x.RoomID });
             modelBuilder.Entity<RoomAmenities>().HasKey(ra => new { ra.AmenitiesID, ra.RoomID });
 
-            //Seeding data
+            //Seeding data for Hotel table
             modelBuilder.Entity<Hotel>().HasData(
                 new Hotel
                 {
@@ -69,6 +69,7 @@ namespace Lab12RelationalDatabases.Data
                 }
                 );
 
+            //seeding table for Room table
             modelBuilder.Entity<Room>().HasData(
                 new Room
                 {
@@ -108,6 +109,7 @@ namespace Lab12RelationalDatabases.Data
                 }
                 );
 
+            //seeding data for Amenities table
             modelBuilder.Entity<Amenities>().HasData(
                 new Amenities
                 {
@@ -136,6 +138,7 @@ namespace Lab12RelationalDatabases.Data
                 }
                 );
 
+            //seeding table for HotelRoom join table with payload
             modelBuilder.Entity<HotelRoom>().HasData(
                 new HotelRoom
                 {
