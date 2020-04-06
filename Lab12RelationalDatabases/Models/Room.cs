@@ -25,6 +25,9 @@ namespace Lab12RelationalDatabases.Models
     {
         Studio,
         OneBedroom,
-        TwoBedroom
+        TwoBedroom,
+        StudioADA,
+        OneBedroomADA,
+        TwoBedroomADA
     }
 }
