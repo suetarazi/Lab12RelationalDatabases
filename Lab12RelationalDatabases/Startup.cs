@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab12RelationalDatabases.Data;
+using Lab12RelationalDatabases.Models;
+using Lab12RelationalDatabases.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +33,9 @@ namespace Lab12RelationalDatabases
         {
             services.AddMvc();
             services.AddDbContext<AsyncHotelsDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //Mappings for Dependency Injection
+            services.AddTransient<IHotelManager, HotelService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
