@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lab12RelationalDatabases.Data;
 using Lab12RelationalDatabases.Models;
+using Lab12RelationalDatabases.Models.Interfaces;
 
 namespace Lab12RelationalDatabases.Controllers
 {
@@ -16,9 +17,9 @@ namespace Lab12RelationalDatabases.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly AsyncHotelsDbContext _context;
+        private readonly IRoomsManager _context;
 
-        public RoomsController(AsyncHotelsDbContext context)
+        public RoomsController(IRoomsManager context)
         {
             _context = context;
         }
@@ -31,7 +32,7 @@ namespace Lab12RelationalDatabases.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
         {
-            return await _context.Rooms.ToListAsync();
+            return await _context.GetAllRooms();
         }
 
         // GET: api/Rooms/5
@@ -42,7 +43,7 @@ namespace Lab12RelationalDatabases.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> GetRoom(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.GetRoomByID(id);
 
             if (room == null)
             {
@@ -69,23 +70,7 @@ namespace Lab12RelationalDatabases.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(room).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoomExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.UpdateRoom(id, room);
 
             return NoContent();
         }
@@ -101,9 +86,8 @@ namespace Lab12RelationalDatabases.Controllers
         [HttpPost]
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
-            _context.Rooms.Add(room);
-            await _context.SaveChangesAsync();
-
+            var result = await _context.CreateRoom(room);
+            
             return CreatedAtAction("GetRoom", new { id = room.ID }, room);
         }
 
@@ -116,26 +100,11 @@ namespace Lab12RelationalDatabases.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Room>> DeleteRoom(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
+            
+            await _context.RemoveRoom(id);
 
-            _context.Rooms.Remove(room);
-            await _context.SaveChangesAsync();
-
-            return room;
+            return NoContent();
         }
 
-        /// <summary>
-        /// Query to find if a room exists by ID
-        /// </summary>
-        /// <param name="id">The ID to check for</param>
-        /// <returns>True if given ID exists</returns>
-        private bool RoomExists(int id)
-        {
-            return _context.Rooms.Any(e => e.ID == id);
-        }
     }
 }

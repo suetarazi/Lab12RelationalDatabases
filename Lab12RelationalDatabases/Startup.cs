@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lab12RelationalDatabases.Data;
 using Lab12RelationalDatabases.Models;
+using Lab12RelationalDatabases.Models.Interfaces;
 using Lab12RelationalDatabases.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +37,7 @@ namespace Lab12RelationalDatabases
 
             //Mappings for Dependency Injection
             services.AddTransient<IHotelManager, HotelService>();
+            services.AddTransient<IRoomsManager, RoomService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
