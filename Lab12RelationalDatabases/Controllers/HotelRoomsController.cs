@@ -10,6 +10,9 @@ using Lab12RelationalDatabases.Models;
 
 namespace Lab12RelationalDatabases.Controllers
 {
+    /// <summary>
+    /// Injection of database utilizing the ControllerBase dependency and giving the AsyncHotelDbContext the private name of _context
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
@@ -21,6 +24,10 @@ namespace Lab12RelationalDatabases.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Beginning of our CRUD method: this Gets a list of all HotelRooms
+        /// </summary>
+        /// <returns>A list of hotel rooms</returns>
         // GET: api/HotelRooms
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
@@ -28,6 +35,11 @@ namespace Lab12RelationalDatabases.Controllers
             return await _context.HotelRooms.ToListAsync();
         }
 
+        /// <summary>
+        /// this Gets a specific hotel room corresponding to an ID
+        /// </summary>
+        /// <param name="id">integer ID</param>
+        /// <returns>the specific hotel room that corresponds with the ID</returns>
         // GET: api/HotelRooms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<HotelRoom>> GetHotelRoom(int id)
@@ -42,6 +54,12 @@ namespace Lab12RelationalDatabases.Controllers
             return hotelRoom;
         }
 
+        /// <summary>
+        /// Updates an amenity with a given ID and name
+        /// </summary>
+        /// <param name="id">integer ID</param>
+        /// <param name="hotelRoom">string hotelRoom</param>
+        /// <returns>an error if it fails</returns>
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -74,6 +92,11 @@ namespace Lab12RelationalDatabases.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Creates a new amenity and assigns it an ID
+        /// </summary>
+        /// <param name="hotelRoom">string hotelRoom</param>
+        /// <returns>new ID and hotelRoom</returns>
         // POST: api/HotelRooms
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -100,6 +123,11 @@ namespace Lab12RelationalDatabases.Controllers
             return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.HotelID }, hotelRoom);
         }
 
+        /// <summary>
+        /// Deletes and amenity with corresponding ID
+        /// </summary>
+        /// <param name="id">integer ID</param>
+        /// <returns>hotelRoom to be deleted</returns>
         // DELETE: api/HotelRooms/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int id)
@@ -116,6 +144,11 @@ namespace Lab12RelationalDatabases.Controllers
             return hotelRoom;
         }
 
+        /// <summary>
+        /// Boolean method to see if hotelRoom exist
+        /// </summary>
+        /// <param name="id">integer ID</param>
+        /// <returns>true or false</returns>
         private bool HotelRoomExists(int id)
         {
             return _context.HotelRooms.Any(e => e.HotelID == id);

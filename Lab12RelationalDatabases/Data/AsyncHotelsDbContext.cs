@@ -139,24 +139,24 @@ namespace Lab12RelationalDatabases.Data
                 );
 
             //seeding table for HotelRoom join table with payload
-            modelBuilder.Entity<HotelRoom>().HasData(
-                new HotelRoom
-                {
-                    HotelID = 1,
-                    RoomID = 2,
-                    RoomNumber = 503,
-                    Rate = 200,
-                    PetFriendly = true
-                },
-                new HotelRoom
-                {
-                    HotelID = 3,
-                    RoomID = 1,
-                    RoomNumber = 404,
-                    Rate = 180,
-                    PetFriendly = false
-                }
-                );
+            //modelBuilder.Entity<HotelRoom>().HasData(
+            //    new HotelRoom
+            //    {
+            //        HotelID = 1,
+            //        RoomID = 2,
+            //        RoomNumber = 503,
+            //        Rate = 200,
+            //        PetFriendly = true
+            //    },
+            //    new HotelRoom
+            //    {
+            //        HotelID = 3,
+            //        RoomID = 1,
+            //        RoomNumber = 404,
+            //        Rate = 180,
+            //        PetFriendly = false
+            //    }
+            //    );
         }
 
         //Refer to each table created
