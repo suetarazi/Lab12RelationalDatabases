@@ -10,6 +10,8 @@ using Lab12RelationalDatabases.Models;
 
 namespace Lab12RelationalDatabases.Controllers
 {
+    //controller for RoomAmenities table derived from base controller
+    //allows for access to database through route /api/RoomAmenities/
     [Route("api/[controller]")]
     [ApiController]
     public class RoomAmenitiesController : ControllerBase
@@ -22,6 +24,10 @@ namespace Lab12RelationalDatabases.Controllers
         }
 
         // GET: api/RoomAmenities
+        /// <summary>
+        /// HTTP Get request which returns all room amenities
+        /// </summary>
+        /// <returns>List of all room amenities</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomAmenities>>> GetRoomAmenities()
         {
@@ -29,6 +35,10 @@ namespace Lab12RelationalDatabases.Controllers
         }
 
         // GET: api/RoomAmenities/5
+        /// <summary>
+        /// HTTP Get request which returns a room amenity based on ID
+        /// </summary>
+        /// <returns>The room amenity with the given ID</
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomAmenities>> GetRoomAmenities(string id)
         {
@@ -45,6 +55,12 @@ namespace Lab12RelationalDatabases.Controllers
         // PUT: api/RoomAmenities/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// HTTP Put request to update data for a given room amenity
+        /// </summary>
+        /// <param name="id">The ID of the room amenity to update</param>
+        /// <param name="hotel">The updated room amenity object</param>
+        /// <returns>Error on failure</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoomAmenities(string id, RoomAmenities roomAmenities)
         {
@@ -101,6 +117,11 @@ namespace Lab12RelationalDatabases.Controllers
         }
 
         // DELETE: api/RoomAmenities/5
+        /// <summary>
+        /// HTTP Delete request to remove a room amenity
+        /// </summary>
+        /// <param name="id">The ID of the room amenity to remove</param>
+        /// <returns>The object form of the removed room amenity</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<RoomAmenities>> DeleteRoomAmenities(string id)
         {
@@ -116,6 +137,11 @@ namespace Lab12RelationalDatabases.Controllers
             return roomAmenities;
         }
 
+        /// <summary>
+        /// Query to find if a room amenity exists by ID
+        /// </summary>
+        /// <param name="id">The ID to check for</param>
+        /// <returns>True if given ID exists</returns>
         private bool RoomAmenitiesExists(string id)
         {
             return _context.RoomAmenities.Any(e => e.AmenitiesID == id);
