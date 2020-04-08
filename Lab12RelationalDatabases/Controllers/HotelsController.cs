@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Lab12RelationalDatabases.Data;
 using Lab12RelationalDatabases.Models;
 using Lab12RelationalDatabases.Models.Interfaces;
+using Lab12RelationalDatabases.DTOs;
 
 namespace Lab12RelationalDatabases.Controllers
 {
@@ -41,7 +42,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// </summary>
         /// <returns>The hotel with the given ID</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
             var hotel = await _context.GetHotelByID(id);
 

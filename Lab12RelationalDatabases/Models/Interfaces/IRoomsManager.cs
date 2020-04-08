@@ -22,5 +22,7 @@ namespace Lab12RelationalDatabases.Models.Interfaces
         //delete a room by ID
         Task RemoveRoom(int roomId);
 
+        //get room amenities
+        Task<List<Amenities>> GetAmenities(int roomId);
     }
 }
