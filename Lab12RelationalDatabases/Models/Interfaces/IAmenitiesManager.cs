@@ -15,9 +15,9 @@ namespace Lab12RelationalDatabases.Models
         Task UpdateAmenities(int amenitiesID, Amenities amenities);
 
         //POST
-        Task<Hotel> CreateAmenities(Amenities amenities);
+        Task<Amenities> CreateAmenities(Amenities amenities);
 
         //DELETE
-        Task<Amenities> RemoveAmenities(int amenitiesID);
+        Task RemoveAmenities(int amenitiesID);
     }
 }

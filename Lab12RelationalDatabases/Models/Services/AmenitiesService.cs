@@ -8,7 +8,7 @@ using Lab12RelationalDatabases.Models.Interfaces;
 
 namespace Lab12RelationalDatabases.Models.Services
 {
-    public class AmenitiesService
+    public class AmenitiesService : IAmenitiesManager
     {
         private AsyncHotelsDbContext _context;
         public AmenitiesService(AsyncHotelsDbContext context)
