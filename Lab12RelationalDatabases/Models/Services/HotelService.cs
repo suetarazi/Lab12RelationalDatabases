@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab12RelationalDatabases.Models.Interfaces;
+using Lab12RelationalDatabases.DTOs;
 
 namespace Lab12RelationalDatabases.Models.Services
 {
@@ -32,13 +33,52 @@ namespace Lab12RelationalDatabases.Models.Services
 
         public async Task<List<Hotel>> GetAllHotels()
         {
-            return await _context.Hotels.ToListAsync();
+            return _context.Hotels.ToList();
         }
 
         public async Task<Hotel> GetHotelByID(int hotelId)
         {
-            Hotel hotel = await _context.Hotels.FindAsync(hotelId);
-            return hotel;
+            Hotel hotel = new Hotel();
+            HotelDTO hoteldto = new HotelDTO();
+            hotel = _context.Hotels.Find(hotelId);
+
+            hoteldto.Name = hotel.Name;
+            hoteldto.PhoneNumber = hotel.Phone;
+            hoteldto.City = hotel.City;
+
+            var hotelRoom = _context.HotelRooms.Where(r => r.HotelID == hotelId)
+                .Include(d => d.Room)
+                .ThenInclude(x => x.RoomAmenities)
+                .ThenInclude(a => a.Amenities)
+                .ToListAsync();
+
+            List<HotelRoomDTO> room = new List<HotelRoomDTO>();
+
+                foreach(var hr in hotelRoom)
+                {
+                room.Add(new HotelRoomDTO
+                {
+                    Rate = hr.Rate,
+                    PetFriendly = hr.PetFriendly,
+                    RoomNumber = hr.RoomNumber,
+                    Room = new RoomDTO
+                    {
+                        Layout = hr.Room.Layout.ToString(),
+                        Name = hr.Room.Name
+
+                    }
+                });
+                room.Add(rm);
+                }
+
+
+            //var hotel = _context.Hotels.Where(x => hotelId == x.ID)
+            //    .Include(x => x.HotelRoom)
+            //    .ThenInclude(x => x.Room)
+            //    .ThenInclude(x => x.RoomAmenities)
+            //    .ThenInclude(e => e.Amenities)
+            //    .Single();
+            return hotelRoom;
         }
 
         public async Task UpdateHotel(int hotelId, Hotel hotel)

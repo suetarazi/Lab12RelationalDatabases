@@ -53,5 +53,9 @@ namespace Lab12RelationalDatabases.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        public Task<List<Amenities>> GetAmenities(int roomId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -25,5 +25,7 @@ namespace Lab12RelationalDatabases.Models
         //delete  a hotel
         Task<Hotel> RemoveHotel(int hotelId);
 
+        //get hotelRooms for hotel
+
     }
 }

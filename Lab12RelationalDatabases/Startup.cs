@@ -35,6 +35,10 @@ namespace Lab12RelationalDatabases
             services.AddMvc();
             services.AddDbContext<AsyncHotelsDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             //Mappings for Dependency Injection
             services.AddTransient<IHotelManager, HotelService>();
             services.AddTransient<IRoomsManager, RoomService>();
