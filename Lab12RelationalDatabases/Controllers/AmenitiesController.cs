@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lab12RelationalDatabases.Data;
 using Lab12RelationalDatabases.Models;
+using Lab12RelationalDatabases.Models.Interfaces;
 
 namespace Lab12RelationalDatabases.Controllers
 {
@@ -17,9 +18,9 @@ namespace Lab12RelationalDatabases.Controllers
     [ApiController]
     public class AmenitiesController : ControllerBase
     {
-        private readonly AsyncHotelsDbContext _context;
+        private readonly IAmenitiesManager _context;
 
-        public AmenitiesController(AsyncHotelsDbContext context)
+        public AmenitiesController(IAmenitiesManager context)
         {
             _context = context;
         }
@@ -30,9 +31,9 @@ namespace Lab12RelationalDatabases.Controllers
         /// <returns>A list of amenities</returns>
         // GET: api/Amenities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenities>>> GetAmenities()
+        public async Task<ActionResult<IEnumerable<Amenities>>> GetAllAmenities()
         {
-            return await _context.Amenities.ToListAsync();
+            return await _context.GetAllAmenities();
         }
 
         /// <summary>
@@ -42,9 +43,9 @@ namespace Lab12RelationalDatabases.Controllers
         /// <returns>the specific amenity that corresponds with the ID</returns>
         // GET: api/Amenities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Amenities>> GetAmenities(int id)
+        public async Task<ActionResult<Amenities>> GetAmenitiesByID(int id)
         {
-            var amenities = await _context.Amenities.FindAsync(id);
+            var amenities = await _context.GetAmenitiesByID(id);
 
             if (amenities == null)
             {
@@ -64,30 +65,14 @@ namespace Lab12RelationalDatabases.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAmenities(int id, Amenities amenities)
+        public async Task<IActionResult> UpdateAmenities(int id, Amenities amenities)
         {
             if (id != amenities.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(amenities).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AmenitiesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.UpdateAmenities(id, amenities);
 
             return NoContent();
         }
@@ -101,10 +86,9 @@ namespace Lab12RelationalDatabases.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Amenities>> PostAmenities(Amenities amenities)
+        public async Task<ActionResult<Amenities>> CreateAmenities(Amenities amenities)
         {
-            _context.Amenities.Add(amenities);
-            await _context.SaveChangesAsync();
+            var result = await _context.CreateAmenities(amenities);
 
             return CreatedAtAction("GetAmenities", new { id = amenities.ID }, amenities);
         }
@@ -116,28 +100,11 @@ namespace Lab12RelationalDatabases.Controllers
         /// <returns>amenity to be deleted</returns>
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Amenities>> DeleteAmenities(int id)
+        public async Task<ActionResult<Amenities>> RemoveAmenities(int id)
         {
-            var amenities = await _context.Amenities.FindAsync(id);
-            if (amenities == null)
-            {
-                return NotFound();
-            }
+            await _context.RemoveAmenities(id);
 
-            _context.Amenities.Remove(amenities);
-            await _context.SaveChangesAsync();
-
-            return amenities;
-        }
-
-        /// <summary>
-        /// Boolean method to see if amenities exist
-        /// </summary>
-        /// <param name="id">integer ID</param>
-        /// <returns>true or false</returns>
-        private bool AmenitiesExists(int id)
-        {
-            return _context.Amenities.Any(e => e.ID == id);
+            return NoContent();
         }
     }
 }
