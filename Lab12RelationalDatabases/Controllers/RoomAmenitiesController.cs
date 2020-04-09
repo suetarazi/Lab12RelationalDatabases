@@ -62,7 +62,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// <param name="hotel">The updated room amenity object</param>
         /// <returns>Error on failure</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoomAmenities(string id, RoomAmenities roomAmenities)
+        public async Task<IActionResult> PutRoomAmenities(int id, RoomAmenities roomAmenities)
         {
             if (id != roomAmenities.AmenitiesID)
             {
@@ -124,7 +124,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// <param name="id">The ID of the room amenity to remove</param>
         /// <returns>The object form of the removed room amenity</returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult<RoomAmenities>> DeleteRoomAmenities(string id)
+        public async Task<ActionResult<RoomAmenities>> DeleteRoomAmenities(int id)
         {
             var roomAmenities = await _context.RoomAmenities.FindAsync(id);
             if (roomAmenities == null)
@@ -143,7 +143,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// </summary>
         /// <param name="id">The ID to check for</param>
         /// <returns>True if given ID exists</returns>
-        private bool RoomAmenitiesExists(string id)
+        private bool RoomAmenitiesExists(int id)
         {
             return _context.RoomAmenities.Any(e => e.AmenitiesID == id);
         }

@@ -7,6 +7,7 @@ namespace Lab12RelationalDatabases.DTOs
 {
     public class HotelDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     
         public string StreetAddress { get; set; }

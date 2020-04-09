@@ -43,7 +43,7 @@ namespace Lab12RelationalDatabases
             services.AddTransient<IHotelManager, HotelService>();
             services.AddTransient<IRoomsManager, RoomService>();
             services.AddTransient<IAmenitiesManager, AmenitiesService>();
-            services.AddTransient<IHotelManager, HotelRoomService>();
+            services.AddTransient<IHotelRoom, HotelRoomService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
