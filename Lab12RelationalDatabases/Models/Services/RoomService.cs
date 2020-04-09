@@ -32,7 +32,6 @@ namespace Lab12RelationalDatabases.Models.Services
 
         // 4/8/2020 - LEFT OFF HERE CONVERTING THIS AND THE NEXT METHOD (GET ROOM BY ID) TO DTO. TROUBLE WITH AMENITIES PROPERTY :(
         public async Task<List<RoomDTO>> GetAllRooms() => await _context.Rooms.ToListAsync();
-
         
         public async Task<RoomDTO> GetRoomByID(int roomId)
         {
@@ -91,7 +90,17 @@ namespace Lab12RelationalDatabases.Models.Services
             // in your foreach loop, you are going to call the _amenities.getamentitiesbyid(item.amenitiesId) method.
             // the returnedresult will be put into a list and returned.
             return amenitiesResults;
-            
+        }
+
+        public async Task<List<RoomAmenities>> GetRoomAmenities(int roomId)
+        {
+            var roomAmenities = await _context.RoomAmenities.Where(roomAmenities => roomAmenities.RoomID == roomId)
+                .ToListAsync();
+            foreach(var roomAmenity in roomAmenities)
+            {
+                roomAmenity.Amenities = await _context.Amenities.FindAsync(roomAmenity.AmenitiesID);
+            }
+            return roomAmenities;
         }
     }
 }

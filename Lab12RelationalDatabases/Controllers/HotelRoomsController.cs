@@ -42,9 +42,9 @@ namespace Lab12RelationalDatabases.Controllers
         /// <returns>the specific hotel room that corresponds with the ID</returns>
         // GET: api/HotelRooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int id)
+        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId, int roomId)
         {
-            var hotelRoom = await _context.HotelRooms.FindAsync(id);
+            var hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomId);
 
             if (hotelRoom == null)
             {
