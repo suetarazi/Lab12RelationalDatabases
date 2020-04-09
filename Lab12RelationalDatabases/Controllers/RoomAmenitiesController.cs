@@ -64,7 +64,7 @@ namespace Lab12RelationalDatabases.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoomAmenities(int id, RoomAmenities roomAmenities)
         {
-            if (id != roomAmenities.AmenitiesID)
+            if (Convert.ToInt32(id) != roomAmenities.AmenitiesID)
             {
                 return BadRequest();
             }
@@ -95,16 +95,19 @@ namespace Lab12RelationalDatabases.Controllers
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost, Route("{RoomId}/{AmenitiesID}")]
 
-        public async Task<ActionResult<RoomAmenities>> PostRoomAmenities(int RoomId, int AmenitiesId)
+        public async Task<ActionResult<RoomAmenities>> PostRoomAmenities(int roomId, int amenitiesId)
         {
-            _context.RoomAmenities.Add(RoomAmenities);
+            RoomAmenities newAmenities = new RoomAmenities();
+            newAmenities.RoomID = roomId;
+            newAmenities.AmenitiesID = amenitiesId;
+            _context.RoomAmenities.Add(newAmenities);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (RoomAmenitiesExists(roomAmenities.AmenitiesID))
+                if (RoomAmenitiesExists(Convert.ToString(newAmenities.AmenitiesID)))
                 {
                     return Conflict();
                 }
@@ -114,7 +117,7 @@ namespace Lab12RelationalDatabases.Controllers
                 }
             }
 
-            return CreatedAtAction("GetRoomAmenities", new { id = roomAmenities.AmenitiesID }, roomAmenities);
+            return CreatedAtAction("GetRoomAmenities", new { id = newAmenities.AmenitiesID }, newAmenities);
         }
 
         // DELETE: api/RoomAmenities/5
@@ -145,7 +148,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// <returns>True if given ID exists</returns>
         private bool RoomAmenitiesExists(int id)
         {
-            return _context.RoomAmenities.Any(e => e.AmenitiesID == id);
+            return _context.RoomAmenities.Any(e => e.AmenitiesID == Convert.ToInt32(id));
         }
     }
 }
