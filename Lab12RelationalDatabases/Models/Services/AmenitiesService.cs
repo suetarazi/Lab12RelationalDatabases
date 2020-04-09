@@ -28,7 +28,7 @@ namespace Lab12RelationalDatabases.Models.Services
         {
             var allAmenities = await _context.Amenities.ToListAsync();
             List<AmenitiesDTO> listAmenities = new List<AmenitiesDTO>();
-            
+
             foreach (var amenity in allAmenities)
             {
                 listAmenities.Add(new AmenitiesDTO
@@ -36,7 +36,7 @@ namespace Lab12RelationalDatabases.Models.Services
                     ID = amenity.ID,
                     Name = amenity.Name
                 });
-                               
+
             }
             return listAmenities;
         }
@@ -61,7 +61,15 @@ namespace Lab12RelationalDatabases.Models.Services
 
         public async Task RemoveAmenities(int amenitiesID)
         {
-            Amenities amenities = await GetAmenitiesByID(amenitiesID);
+            AmenitiesDTO amenitiesDTO = await GetAmenitiesByID(amenitiesID);
+            
+            //amenitiesDTO.CovertBackToAmenities()
+            // covert DTO to amenities
+            Amenities amenities = new Amenities()
+            {
+                ID = amenitiesDTO.ID,
+                Name = amenitiesDTO.Name
+            };
             _context.Amenities.Remove(amenities);
             await _context.SaveChangesAsync();
         }

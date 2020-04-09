@@ -46,17 +46,18 @@ namespace Lab12RelationalDatabases.Models.Services
                 var getAmenities = new AmenitiesDTO
                 {
                     ID = amenity.ID,
-                    Name = _context.Amenities.Find(Amenities.amenity.ID).Name,
+                    Name = _context.Amenities.Find(amenity.AmenitiesID).Name,
                 };
+                roomAmenityDTO.Add(getAmenities);
             }
-                
+
             RoomDTO roomDto = new RoomDTO
             {
                 Id = room.ID,
                 Name = room.Name,
                 Layout = room.Layout.ToString(),
-                Amenities = room.RoomAmenities.
-            };
+                Amenities = roomAmenityDTO
+        };
             return roomDto;
         }
 
@@ -72,11 +73,12 @@ namespace Lab12RelationalDatabases.Models.Services
         public async Task RemoveRoom(int roomId)
         {
             Room room = await GetRoomByID(roomId);
+            //RoomDTO.room = room;
             _context.Rooms.Remove(room);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Amenities>> GetAmenities(int roomId)
+        public async Task<List<AmenitiesDTO>> GetAmenities(int roomId)
         {
             // getting all of the RoomAmenities where roomid == roomid
             // return a list RoomAmentities Objects
