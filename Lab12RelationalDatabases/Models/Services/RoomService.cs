@@ -32,6 +32,10 @@ namespace Lab12RelationalDatabases.Models.Services
 
         // 4/8/2020 - LEFT OFF HERE CONVERTING THIS AND THE NEXT METHOD (GET ROOM BY ID) TO DTO. TROUBLE WITH AMENITIES PROPERTY :(
         public async Task<List<RoomDTO>> GetAllRooms() => await _context.Rooms.ToListAsync();
+        //
+        //make a call out to bring in amenities interface
+        //make a new list
+        //
         
         public async Task<RoomDTO> GetRoomByID(int roomId)
         {
