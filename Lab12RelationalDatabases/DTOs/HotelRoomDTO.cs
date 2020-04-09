@@ -14,6 +14,8 @@ namespace Lab12RelationalDatabases.DTOs
         public bool PetFriendly { get; set; }
 
         public RoomDTO Room { get; set; }
+
+
     
     }
 }

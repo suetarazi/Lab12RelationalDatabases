@@ -14,7 +14,7 @@ namespace Lab12RelationalDatabases.Controllers
 {
     //controller for Hotels table derived from base controller
     //allows for access to database through route /api/Hotels/
-    [Route("api/[controller]")]
+    [Route("api/Hotels")]
     [ApiController]
     public class HotelsController : ControllerBase
     {
