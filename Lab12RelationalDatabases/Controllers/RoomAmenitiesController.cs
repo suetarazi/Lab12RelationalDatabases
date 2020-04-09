@@ -107,7 +107,7 @@ namespace Lab12RelationalDatabases.Controllers
             }
             catch (DbUpdateException)
             {
-                if (RoomAmenitiesExists(Convert.ToString(newAmenities.AmenitiesID)))
+                if (RoomAmenitiesExists(newAmenities.AmenitiesID))
                 {
                     return Conflict();
                 }

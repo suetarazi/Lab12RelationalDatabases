@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Lab12RelationalDatabases.Data;
 using Lab12RelationalDatabases.Models;
 using Lab12RelationalDatabases.Models.Interfaces;
+using Lab12RelationalDatabases.DTOs;
 
 namespace Lab12RelationalDatabases.Controllers
 {
@@ -30,7 +31,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// </summary>
         /// <returns>List of all rooms</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
+        public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
         {
             return await _context.GetAllRooms();
         }
@@ -41,7 +42,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// </summary>
         /// <returns>The room with the given ID</returns>
         [HttpGet, Route("{roomId}")]
-        public async Task<ActionResult<Room>> GetRoom(int id)
+        public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
             var room = await _context.GetRoomByID(id);
 
@@ -50,7 +51,7 @@ namespace Lab12RelationalDatabases.Controllers
                 return NotFound();
             }
 
-            room.RoomAmenities = await _context.GetRoomAmenities(id);
+            room.Amenities = await _context.GetRoomAmenities(id);
 
             return room;
         }
