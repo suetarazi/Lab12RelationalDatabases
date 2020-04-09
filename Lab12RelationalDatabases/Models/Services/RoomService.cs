@@ -1,4 +1,5 @@
 ﻿using Lab12RelationalDatabases.Data;
+using Lab12RelationalDatabases.DTOs;
 using Lab12RelationalDatabases.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,14 +30,31 @@ namespace Lab12RelationalDatabases.Models.Services
             return room;
         }
 
-
-        public async Task<List<Room>> GetAllRooms() => await _context.Rooms.ToListAsync();
+        // 4/8/2020 - LEFT OFF HERE CONVERTING THIS AND THE NEXT METHOD (GET ROOM BY ID) TO DTO. TROUBLE WITH AMENITIES PROPERTY :(
+        public async Task<List<RoomDTO>> GetAllRooms() => await _context.Rooms.ToListAsync();
 
         
-        public async Task<Room> GetRoomByID(int roomId)
+        public async Task<RoomDTO> GetRoomByID(int roomId)
         {
-            Room room = await _context.Rooms.FindAsync(roomId);
-            return room;
+            var room = await _context.Rooms.FindAsync(roomId);
+            List<AmenitiesDTO> roomAmenityDTO = new List<AmenitiesDTO>();
+            foreach(var amenity in room.RoomAmenities)
+            {
+                var getAmenities = new AmenitiesDTO
+                {
+                    ID = amenity.ID,
+                    Name = _context.Amenities.Find(Amenities.amenity.ID).Name,
+                };
+            }
+                
+            RoomDTO roomDto = new RoomDTO
+            {
+                Id = room.ID,
+                Name = room.Name,
+                Layout = room.Layout.ToString(),
+                Amenities = room.RoomAmenities.
+            };
+            return roomDto;
         }
 
         public async Task UpdateRoom(int roomId, Room room)

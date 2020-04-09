@@ -25,6 +25,11 @@ namespace Lab12RelationalDatabases.Models.Services
             throw new NotImplementedException();
         }
 
+        public Task<List<HotelRoom>> GetAllHotelRooms(int hotelId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<HotelRoom> GetByRoomNumber(int hotelID, int RoomNumber)
         {
             throw new NotImplementedException();

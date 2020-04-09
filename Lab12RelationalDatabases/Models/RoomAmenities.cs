@@ -16,6 +16,7 @@ namespace Lab12RelationalDatabases.Models
 
         public Amenities Amenities { get; set; }
         public Room Room { get; set; }
+        public int ID { get; internal set; }
     }
 
     
