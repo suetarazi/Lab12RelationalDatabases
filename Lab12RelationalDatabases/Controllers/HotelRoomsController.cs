@@ -13,7 +13,7 @@ namespace Lab12RelationalDatabases.Controllers
     /// <summary>
     /// Injection of database utilizing the ControllerBase dependency and giving the AsyncHotelDbContext the private name of _context
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/hotel/room")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
@@ -29,7 +29,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// </summary>
         /// <returns>A list of hotel rooms</returns>
         // GET: api/HotelRooms
-        [HttpGet]
+        [HttpGet, Route("{hotelID}/{roomNumber}")]
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
         {
             return await _context.HotelRooms.ToListAsync();
@@ -63,7 +63,7 @@ namespace Lab12RelationalDatabases.Controllers
         // PUT: api/HotelRooms/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
+        [HttpPut, Route("{hotelID}/{roomNumber}")]
         public async Task<IActionResult> PutHotelRoom(int id, HotelRoom hotelRoom)
         {
             if (id != hotelRoom.HotelID)
@@ -100,7 +100,7 @@ namespace Lab12RelationalDatabases.Controllers
         // POST: api/HotelRooms
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
+        [HttpPost, Route("{HotelId}")]
         public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
         {
             _context.HotelRooms.Add(hotelRoom);

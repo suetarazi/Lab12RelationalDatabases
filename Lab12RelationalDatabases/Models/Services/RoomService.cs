@@ -11,10 +11,12 @@ namespace Lab12RelationalDatabases.Models.Services
     public class RoomService : IRoomsManager
     {
         private AsyncHotelsDbContext _context;
+        private IAmenitiesManager _amenities;
 
-        public RoomService(AsyncHotelsDbContext context)
+        public RoomService(AsyncHotelsDbContext context, IAmenitiesManager amenities)
         {
             _context = context;
+            _amenities = amenities;
         }
 
         public async Task<Room> CreateRoom(Room room)
@@ -53,9 +55,25 @@ namespace Lab12RelationalDatabases.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task<List<Amenities>> GetAmenities(int roomId)
+        public async Task<List<Amenities>> GetAmenities(int roomId)
         {
-            throw new NotImplementedException();
+            // getting all of the RoomAmenities where roomid == roomid
+            // return a list RoomAmentities Objects
+            var roomAmenities = await _context.RoomAmenities.Where(x => x.RoomID == roomId ).ToListAsync();
+
+            // traverse over my amenities and get the individual details about each amentity. 
+            List<Amenities> amenitiesResults = new List<Amenities>();
+
+            foreach (var item in roomAmenities)
+            {
+                var items = await _amenities.GetAmenitiesByID(item.AmenitiesID);
+                amenitiesResults.Add(items);
+            }
+            // Bring in your IAmenityManager into this service
+            // in your foreach loop, you are going to call the _amenities.getamentitiesbyid(item.amenitiesId) method.
+            // the returnedresult will be put into a list and returned.
+            return amenitiesResults;
+            
         }
     }
 }

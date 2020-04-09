@@ -17,6 +17,6 @@ namespace Lab12RelationalDatabases.DTOs
     
         public string PhoneNumber { get; set; }
 
-        List<HotelRoomDTO> Rooms { get; set; }
+        public List<HotelRoomDTO> Rooms { get; set; }
     }
 }

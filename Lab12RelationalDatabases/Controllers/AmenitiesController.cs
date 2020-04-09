@@ -14,7 +14,7 @@ namespace Lab12RelationalDatabases.Controllers
     /// <summary>
     /// Injection of database utilizing the ControllerBase dependency and giving the AsyncHotelDbContext the private name of _context
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/amenities")]
     [ApiController]
     public class AmenitiesController : ControllerBase
     {
@@ -54,6 +54,7 @@ namespace Lab12RelationalDatabases.Controllers
 
             return amenities;
         }
+
 
         /// <summary>
         /// Updates an amenity with a given ID and name

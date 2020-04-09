@@ -13,7 +13,7 @@ namespace Lab12RelationalDatabases.Controllers
 {
     //controller for Rooms table derived from base controller
     //allows for access to database through route /api/Rooms/
-    [Route("api/[controller]")]
+    [Route("api/rooms")]
     [ApiController]
     public class RoomsController : ControllerBase
     {
@@ -40,7 +40,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// HTTP Get request which returns a room based on ID
         /// </summary>
         /// <returns>The room with the given ID</returns>
-        [HttpGet("{id}")]
+        [HttpGet, Route("{roomId}")]
         public async Task<ActionResult<Room>> GetRoom(int id)
         {
             var room = await _context.GetRoomByID(id);
@@ -51,6 +51,14 @@ namespace Lab12RelationalDatabases.Controllers
             }
 
             return room;
+        }
+
+        //Get Amenities for Room:
+        [HttpGet, Route("{roomId}")]
+        public Task<ActionResult<Room>> GetAmenitiesForRoom(int roomId)
+        {
+            _context.GetAmenities(roomId);
+            return null;
         }
 
         // PUT: api/Rooms/5

@@ -12,7 +12,7 @@ namespace Lab12RelationalDatabases.Controllers
 {
     //controller for RoomAmenities table derived from base controller
     //allows for access to database through route /api/RoomAmenities/
-    [Route("api/[controller]")]
+    [Route("api/Rooms/Amenities")]
     [ApiController]
     public class RoomAmenitiesController : ControllerBase
     {
@@ -93,10 +93,11 @@ namespace Lab12RelationalDatabases.Controllers
         // POST: api/RoomAmenities
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<RoomAmenities>> PostRoomAmenities(RoomAmenities roomAmenities)
+        [HttpPost, Route("{RoomId}/{AmenitiesID}")]
+
+        public async Task<ActionResult<RoomAmenities>> PostRoomAmenities(int RoomId, int AmenitiesId)
         {
-            _context.RoomAmenities.Add(roomAmenities);
+            _context.RoomAmenities.Add(RoomAmenities);
             try
             {
                 await _context.SaveChangesAsync();

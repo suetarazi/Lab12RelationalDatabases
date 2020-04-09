@@ -11,6 +11,6 @@ namespace Lab12RelationalDatabases.DTOs
 
         public string Layout { get; set; }
 
-        List<AmenitiesDTO> Amenities { get; set; }
+        public List<AmenitiesDTO> Amenities { get; set; }
     }
 }

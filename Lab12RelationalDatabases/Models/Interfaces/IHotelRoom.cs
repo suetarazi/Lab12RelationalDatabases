@@ -16,7 +16,7 @@ namespace Lab12RelationalDatabases.Models.Interfaces
         Task Update(int hotelID, HotelRoom hotelRoom);
 
         //get all hotelrooms
-        Task<List<HotelRoom>> GetAllHotelRooms();
+        Task<List<HotelRoom>> GetAllHotelRooms(int hotelId);
 
         //get a single hotel room
 
