@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lab12RelationalDatabases.Models.Interfaces;
+using Lab12RelationalDatabases.DTOs;
 
 namespace Lab12RelationalDatabases.Models.Services
 {
@@ -23,15 +24,33 @@ namespace Lab12RelationalDatabases.Models.Services
             return amenities;
         }
 
-        public async Task<List<Amenities>> GetAllAmenities()
+        public async Task<List<AmenitiesDTO>> GetAllAmenities()
         {
-            return await _context.Amenities.ToListAsync();
+            var allAmenities = await _context.Amenities.ToListAsync();
+            List<AmenitiesDTO> listAmenities = new List<AmenitiesDTO>();
+            
+            foreach (var amenity in allAmenities)
+            {
+                listAmenities.Add(new AmenitiesDTO
+                {
+                    ID = amenity.ID,
+                    Name = amenity.Name
+                });
+                               
+            }
+            return listAmenities;
         }
 
-        public async Task<Amenities> GetAmenitiesByID(int amenitiesID)
+        public async Task<AmenitiesDTO> GetAmenitiesByID(int amenitiesID)
         {
             Amenities amenities = await _context.Amenities.FindAsync(amenitiesID);
-            return amenities;
+            AmenitiesDTO amenitiesDto = new AmenitiesDTO
+            {
+                ID = amenities.ID,
+                Name = amenities.Name,
+
+            };
+            return amenitiesDto;
         }
 
         public async Task UpdateAmenities(int amenitiesID, Amenities amenities)

@@ -31,9 +31,23 @@ namespace Lab12RelationalDatabases.Models.Services
             return hotel;
         }
 
-        public async Task<List<Hotel>> GetAllHotels() => await _context.Hotels.ToListAsync();
+        public async Task<List<HotelDTO>> GetAllHotels()
+        {
+            var hotels = await _context.Hotels.ToListAsync();
+            List<HotelDTO> hotelList = new List<HotelDTO>();
 
-        public async Task<Hotel> GetHotelByID(int hotelId)
+            foreach (var hotel in hotels)
+            {
+                hotelList.Add(new HotelDTO
+                {
+                    Id = hotel.ID,
+                    Name = hotel.Name,
+                });
+            }
+            return hotelList;
+        }
+
+        public async Task<HotelDTO> GetHotelByID(int hotelId)
         {
             Hotel hotel = new Hotel();
             HotelDTO hoteldto = new HotelDTO();
