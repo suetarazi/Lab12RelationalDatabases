@@ -29,9 +29,7 @@ namespace Lab12RelationalDatabases.Models.Services
             return room;
         }
 
-
         public async Task<List<Room>> GetAllRooms() => await _context.Rooms.ToListAsync();
-
         
         public async Task<Room> GetRoomByID(int roomId)
         {
@@ -73,7 +71,17 @@ namespace Lab12RelationalDatabases.Models.Services
             // in your foreach loop, you are going to call the _amenities.getamentitiesbyid(item.amenitiesId) method.
             // the returnedresult will be put into a list and returned.
             return amenitiesResults;
-            
+        }
+
+        public async Task<List<RoomAmenities>> GetRoomAmenities(int roomId)
+        {
+            var roomAmenities = await _context.RoomAmenities.Where(roomAmenities => roomAmenities.RoomID == roomId)
+                .ToListAsync();
+            foreach(var roomAmenity in roomAmenities)
+            {
+                roomAmenity.Amenities = await _context.Amenities.FindAsync(roomAmenity.AmenitiesID);
+            }
+            return roomAmenities;
         }
     }
 }

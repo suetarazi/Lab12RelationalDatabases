@@ -50,6 +50,8 @@ namespace Lab12RelationalDatabases.Controllers
                 return NotFound();
             }
 
+            room.RoomAmenities = await _context.GetRoomAmenities(id);
+
             return room;
         }
 
@@ -113,7 +115,5 @@ namespace Lab12RelationalDatabases.Controllers
 
             return NoContent();
         }
-
-
     }
 }

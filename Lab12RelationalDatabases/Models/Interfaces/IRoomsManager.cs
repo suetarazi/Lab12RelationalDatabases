@@ -24,5 +24,7 @@ namespace Lab12RelationalDatabases.Models.Interfaces
 
         //get room amenities
         Task<List<Amenities>> GetAmenities(int roomId);
+
+        Task<List<RoomAmenities>> GetRoomAmenities(int roomId);
     }
 }
