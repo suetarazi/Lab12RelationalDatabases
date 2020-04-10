@@ -30,14 +30,36 @@ namespace Lab12RelationalDatabases.Models.Services
             return room;
         }
 
-        // 4/8/2020 - LEFT OFF HERE CONVERTING THIS AND THE NEXT METHOD (GET ROOM BY ID) TO DTO. TROUBLE WITH AMENITIES PROPERTY :(
-        public async Task<List<RoomDTO>> GetAllRooms() => await _context.Rooms.ToListAsync();
-        //
-        //make a call out to bring in amenities interface
-        //make a new list
-        //
-        
-        public async Task<RoomDTO> GetRoomByID(int roomId)
+                public async Task<List<RoomDTO>> GetAllRooms()
+        {
+            var allRooms = await _context.Rooms.ToListAsync();
+            List<RoomDTO> allDTOrooms = new List<RoomDTO>();
+
+
+            foreach (var room in allRooms)
+            {
+                List<AmenitiesDTO> roomAmenityDTO = await GetAmenities(room.ID);
+                var roomDTO = new RoomDTO()
+                {
+                    Id = room.ID,
+                    Name = room.Name,
+                    Layout = room.Layout.ToString(),
+                    Amenities = roomAmenityDTO
+                };
+                allDTOrooms.Add(roomDTO);
+            
+            }
+            return allDTOrooms;
+        }
+
+    
+
+    //
+    //make a call out to bring in amenities interface
+    //make a new list
+    //
+
+    public async Task<RoomDTO> GetRoomByID(int roomId)
         {
             var room = await _context.Rooms.FindAsync(roomId);
             List<AmenitiesDTO> roomAmenityDTO = new List<AmenitiesDTO>();
@@ -72,11 +94,11 @@ namespace Lab12RelationalDatabases.Models.Services
 
         public async Task RemoveRoom(int roomId)
         {
-            Room room = await GetRoomByID(roomId);
-            //RoomDTO.room = room;
-            _context.Rooms.Remove(room);
+            Room room = await _context.Rooms.FindAsync(roomId);
+
+              _context.Rooms.Remove(room);
             await _context.SaveChangesAsync();
-        }
+    }
 
         public async Task<List<AmenitiesDTO>> GetAmenities(int roomId)
         {
@@ -85,7 +107,7 @@ namespace Lab12RelationalDatabases.Models.Services
             var roomAmenities = await _context.RoomAmenities.Where(x => x.RoomID == roomId ).ToListAsync();
 
             // traverse over my amenities and get the individual details about each amentity. 
-            List<Amenities> amenitiesResults = new List<Amenities>();
+            List<AmenitiesDTO> amenitiesResults = new List<AmenitiesDTO>();
 
             foreach (var item in roomAmenities)
             {
@@ -107,6 +129,11 @@ namespace Lab12RelationalDatabases.Models.Services
                 roomAmenity.Amenities = await _context.Amenities.FindAsync(roomAmenity.AmenitiesID);
             }
             return roomAmenities;
+        }
+
+        Task<List<AmenitiesDTO>> IRoomsManager.GetRoomAmenities(int roomId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
