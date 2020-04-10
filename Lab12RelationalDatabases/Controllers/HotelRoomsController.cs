@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lab12RelationalDatabases.Data;
 using Lab12RelationalDatabases.Models;
+using Lab12RelationalDatabases.DTOs;
 
 namespace Lab12RelationalDatabases.Controllers
 {
@@ -30,7 +31,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// <returns>A list of hotel rooms</returns>
         // GET: api/HotelRooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
+        public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
         {
             return await _context.HotelRooms.ToListAsync();
         }
@@ -42,9 +43,9 @@ namespace Lab12RelationalDatabases.Controllers
         /// <returns>the specific hotel room that corresponds with the ID</returns>
         // GET: api/HotelRooms/5
         [HttpGet, Route("{hotelID}/{roomNumber}")]
-        public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId, int roomId)
+        public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelId, int roomnumber)
         {
-            var hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomId);
+            var hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomnumber);
 
             if (hotelRoom == null)
             {

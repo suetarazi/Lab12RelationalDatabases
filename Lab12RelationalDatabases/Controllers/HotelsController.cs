@@ -31,7 +31,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// </summary>
         /// <returns>List of all hotels</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+        public async Task<ActionResult<IEnumerable<HotelDTO>>> GetHotels()
         {
             return await _context.GetAllHotels();
         }
