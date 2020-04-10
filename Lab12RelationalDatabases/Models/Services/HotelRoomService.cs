@@ -1,4 +1,5 @@
 ﻿using Lab12RelationalDatabases.Data;
+using Lab12RelationalDatabases.DTOs;
 using Lab12RelationalDatabases.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,15 +24,17 @@ namespace Lab12RelationalDatabases.Models.Services
             return hotelRoom;
         }
 
-        public async Task<List<HotelRoom>> GetAllHotelRooms() => await _context.HotelRooms.ToListAsync();
-
-        public async Task<List<HotelRoom>> GetAllHotelRoomsByHotel(int hotelId)
+        public async Task<List<HotelRoomDTO>> GetAllHotelRooms()
+        {
+            await _context.HotelRooms.ToListAsync();
+        }
+        public async Task<List<HotelRoomDTO>> GetAllHotelRoomsByHotel(int hotelId)
         {
             List<HotelRoom> hotelRooms = await _context.HotelRooms.Where(x => x.HotelID == hotelId).ToListAsync();
             return hotelRooms;
         }
 
-        public async Task<HotelRoom> GetHotelRoomByRoomNumber(int hotelID, int roomNumber)
+        public async Task<HotelRoomDTO> GetHotelRoomByRoomNumber(int hotelID, int roomNumber)
         {
             HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelID, roomNumber);
             return hotelRoom;
@@ -54,6 +57,21 @@ namespace Lab12RelationalDatabases.Models.Services
         {
             _context.Entry(hotelRoom).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+        }
+
+        Task<List<HotelRoomDTO>> IHotelRoom.GetAllHotelRooms()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<HotelRoomDTO>> IHotelRoom.GetAllHotelRoomsByHotel(int hotelId)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<HotelRoomDTO> IHotelRoom.GetHotelRoomByID(int hotelId, int roomnumber)
+        {
+            throw new NotImplementedException();
         }
     }
 }

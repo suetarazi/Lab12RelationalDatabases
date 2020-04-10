@@ -29,7 +29,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// </summary>
         /// <returns>A list of hotel rooms</returns>
         // GET: api/HotelRooms
-        [HttpGet, Route("{hotelID}/{roomNumber}")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms()
         {
             return await _context.HotelRooms.ToListAsync();
@@ -41,7 +41,7 @@ namespace Lab12RelationalDatabases.Controllers
         /// <param name="id">integer ID</param>
         /// <returns>the specific hotel room that corresponds with the ID</returns>
         // GET: api/HotelRooms/5
-        [HttpGet("{id}")]
+        [HttpGet, Route("{hotelID}/{roomNumber}")]
         public async Task<ActionResult<HotelRoom>> GetHotelRoom(int hotelId, int roomId)
         {
             var hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomId);
