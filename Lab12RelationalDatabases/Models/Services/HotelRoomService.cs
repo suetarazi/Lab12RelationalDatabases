@@ -26,11 +26,44 @@ namespace Lab12RelationalDatabases.Models.Services
 
         public async Task<List<HotelRoomDTO>> GetAllHotelRooms()
         {
-            await _context.HotelRooms.ToListAsync();
-        }
-        public async Task<List<HotelRoomDTO>> GetAllHotelRoomsByHotel(int hotelId)
+            var getAllHotelRooms =  await _context.HotelRooms.ToListAsync();
+            List<HotelRoomDTO> allHotelRooms = new List<HotelRoomDTO>();
+
+            
+            foreach(var hotelRoom in getAllHotelRooms)
+            {
+                List<AmenitiesDTO> roomAmenityDTO = await GetAllRooms();
+                var hotelRoomDTO = new HotelRoomDTO()
+                {
+                    HotelId = hotelRoom.HotelId,
+                    RoomNumber = hotelRoom.RoomNumber,
+                    Rate = hotelRoom.Rate,
+                    PetFriendly = hotelRoom.PetFriendly,
+                    RoomId = hotelRoom.RoomId,
+                    Room = AllDTOrooms
+
+
+                    hotelRoomDTO.Add(hotelRoom); 
+                };
+            }
+            return allHotelRooms;
+       
+    }
+    public async Task<List<HotelRoomDTO>> GetAllHotelRoomsByHotel(int hotelId)
         {
-            List<HotelRoom> hotelRooms = await _context.HotelRooms.Where(x => x.HotelID == hotelId).ToListAsync();
+            var hotelIdRooms = await _context.HotelRooms.Where(x => x.HotelID == hotelId).ToListAsync();
+            List<HotelRoomDTO> hotelRooms = new List<HotelRoomDTO>();
+
+            foreach (var room in hotelRooms)
+            {
+                HotelId = hotelRoom.HotelId,
+                RoomNumber = hotelRoom.RoomNumber,
+                Rate = hotelRoom.Rate,
+                PetFriendly = hotelRoom.PetFriendly,
+                RoomId = hotelRoom.RoomId,
+                Room = AllDTOrooms
+
+            }
             return hotelRooms;
         }
 
@@ -70,6 +103,11 @@ namespace Lab12RelationalDatabases.Models.Services
         }
 
         Task<HotelRoomDTO> IHotelRoom.GetHotelRoomByID(int hotelId, int roomnumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<HotelRoom> IHotelRoom.GetHotelRoomByRoomNumber(int hotelID, int RoomNumber)
         {
             throw new NotImplementedException();
         }

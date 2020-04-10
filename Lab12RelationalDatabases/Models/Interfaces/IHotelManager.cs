@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lab12RelationalDatabases.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,11 +17,11 @@ namespace Lab12RelationalDatabases.Models
         Task Update(int hotelID, Hotel hotel);
 
         //get all hotels
-        Task<List<Hotel>> GetAllHotels();
+        Task<List<HotelDTO>> GetAllHotels();
 
         //get a single hotel
 
-        Task<Hotel> GetHotelByID(int hotelId);
+        Task<HotelDTO> GetHotelByID(int hotelId);
 
         //delete  a hotel
         Task<Hotel> RemoveHotel(int hotelId);

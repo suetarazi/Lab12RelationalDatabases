@@ -86,7 +86,7 @@ namespace Lab12RelationalDatabases.Models.Services
             //    .ThenInclude(x => x.RoomAmenities)
             //    .ThenInclude(e => e.Amenities)
             //    .Single();
-            return hotel;
+            return hoteldto;
         }
 
         public async Task UpdateHotel(int hotelId, Hotel hotel)
@@ -100,7 +100,7 @@ namespace Lab12RelationalDatabases.Models.Services
         // task for delete needs to be here:
         public async Task RemoveHotel(int hotelId)
         {
-            Hotel hotel = await GetHotelByID(hotelId);
+            Hotel hotel = await _context.Hotels.FindAsync(hotelId);
             _context.Hotels.Remove(hotel);
             //now to save the changes:
             await _context.SaveChangesAsync();

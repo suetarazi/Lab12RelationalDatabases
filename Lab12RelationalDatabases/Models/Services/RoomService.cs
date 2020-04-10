@@ -30,7 +30,7 @@ namespace Lab12RelationalDatabases.Models.Services
             return room;
         }
 
-                public async Task<List<RoomDTO>> GetAllRooms()
+        public async Task<List<RoomDTO>> GetAllRooms()
         {
             var allRooms = await _context.Rooms.ToListAsync();
             List<RoomDTO> allDTOrooms = new List<RoomDTO>();
