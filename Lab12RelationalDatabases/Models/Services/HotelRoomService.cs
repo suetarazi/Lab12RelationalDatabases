@@ -26,11 +26,11 @@ namespace Lab12RelationalDatabases.Models.Services
 
         public async Task<List<HotelRoomDTO>> GetAllHotelRooms()
         {
-            var getAllHotelRooms =  await _context.HotelRooms.ToListAsync();
+            var getAllHotelRooms = await _context.HotelRooms.ToListAsync();
             List<HotelRoomDTO> allHotelRooms = new List<HotelRoomDTO>();
 
-            
-            foreach(var hotelRoom in getAllHotelRooms)
+
+            foreach (var hotelRoom in getAllHotelRooms)
             {
                 List<AmenitiesDTO> roomAmenityDTO = await GetAllRooms();
                 var hotelRoomDTO = new HotelRoomDTO()
@@ -40,33 +40,35 @@ namespace Lab12RelationalDatabases.Models.Services
                     Rate = hotelRoom.Rate,
                     PetFriendly = hotelRoom.PetFriendly,
                     RoomId = hotelRoom.RoomId,
-                    Room = AllDTOrooms
+                    Room = AllDTOrooms,
 
 
-                    hotelRoomDTO.Add(hotelRoom); 
+                    hotelRoomDTO.Add(hotelRoom);
                 };
-            }
+            allHotelRooms.Add(hotelRoomDTO);
             return allHotelRooms;
-       
-    }
-    public async Task<List<HotelRoomDTO>> GetAllHotelRoomsByHotel(int hotelId)
-        {
-            var hotelIdRooms = await _context.HotelRooms.Where(x => x.HotelID == hotelId).ToListAsync();
-            List<HotelRoomDTO> hotelRooms = new List<HotelRoomDTO>();
-
-            foreach (var room in hotelRooms)
-            {
-                HotelId = hotelRoom.HotelId,
-                RoomNumber = hotelRoom.RoomNumber,
-                Rate = hotelRoom.Rate,
-                PetFriendly = hotelRoom.PetFriendly,
-                RoomId = hotelRoom.RoomId,
-                Room = AllDTOrooms
-
-            }
-            return hotelRooms;
         }
 
+    public async Task<List<HotelRoomDTO>> GetAllHotelRoomsByHotel(int hotelId)
+    {
+        var hotelIdRooms = await _context.HotelRooms.Where(x => x.HotelID == hotelId).ToListAsync();
+        List<HotelRoomDTO> hotelRooms = new List<HotelRoomDTO>()
+        {
+            foreach (var room in hotelRooms)
+        {
+            HotelId = hotelRoom.HotelId;
+            RoomNumber = hotelRoom.RoomNumber;
+            Rate = hotelRoom.Rate;
+            PetFriendly = hotelRoom.PetFriendly;
+            RoomId = hotelRoom.RoomId;
+            Room = AllDTOrooms;
+
+            hotelRooms.Add(room);
+        }
+        return hotelRooms;
+
+        }
+    }
         public async Task<HotelRoomDTO> GetHotelRoomByRoomNumber(int hotelID, int roomNumber)
         {
             HotelRoom hotelRoom = await _context.HotelRooms.FindAsync(hotelID, roomNumber);
@@ -92,24 +94,6 @@ namespace Lab12RelationalDatabases.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        Task<List<HotelRoomDTO>> IHotelRoom.GetAllHotelRooms()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<List<HotelRoomDTO>> IHotelRoom.GetAllHotelRoomsByHotel(int hotelId)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<HotelRoomDTO> IHotelRoom.GetHotelRoomByID(int hotelId, int roomnumber)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<HotelRoom> IHotelRoom.GetHotelRoomByRoomNumber(int hotelID, int RoomNumber)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
