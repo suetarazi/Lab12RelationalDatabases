@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lab12RelationalDatabases.Data;
 using Lab12RelationalDatabases.Models;
+using Lab12RelationalDatabases.Models.Interfaces;
 using Lab12RelationalDatabases.DTOs;
 
 namespace Lab12RelationalDatabases.Controllers
@@ -18,9 +19,9 @@ namespace Lab12RelationalDatabases.Controllers
     [ApiController]
     public class HotelRoomsController : ControllerBase
     {
-        private readonly AsyncHotelsDbContext _context;
+        private readonly IHotelRoom _context;
 
-        public HotelRoomsController(AsyncHotelsDbContext context)
+        public HotelRoomsController(IHotelRoom context)
         {
             _context = context;
         }
@@ -33,7 +34,7 @@ namespace Lab12RelationalDatabases.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms()
         {
-            return await _context.HotelRooms.ToListAsync();
+            return await _context.GetAllHotelRooms();
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Lab12RelationalDatabases.Controllers
         [HttpGet, Route("{hotelID}/{roomNumber}")]
         public async Task<ActionResult<HotelRoomDTO>> GetHotelRoom(int hotelId, int roomnumber)
         {
-            var hotelRoom = await _context.HotelRooms.FindAsync(hotelId, roomnumber);
+            var hotelRoom = await _context.GetHotelRoomByRoomNumber(hotelId, roomnumber);
 
             if (hotelRoom == null)
             {
@@ -65,30 +66,14 @@ namespace Lab12RelationalDatabases.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut, Route("{hotelID}/{roomNumber}")]
-        public async Task<IActionResult> PutHotelRoom(int id, HotelRoom hotelRoom)
+        public async Task<IActionResult> PutHotelRoom(int id, int roomNumber, HotelRoom hotelRoom)
         {
-            if (id != hotelRoom.HotelID)
+            if (id != hotelRoom.HotelID || roomNumber != hotelRoom.RoomNumber)
             {
                 return BadRequest();
             }
 
-            _context.Entry(hotelRoom).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelRoomExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.UpdateHotelRoom(id, hotelRoom);
 
             return NoContent();
         }
@@ -104,22 +89,7 @@ namespace Lab12RelationalDatabases.Controllers
         [HttpPost, Route("{HotelId}")]
         public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
         {
-            _context.HotelRooms.Add(hotelRoom);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (HotelRoomExists(hotelRoom.HotelID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.CreateHotelRoom(hotelRoom);
 
             return CreatedAtAction("GetHotelRoom", new { id = hotelRoom.HotelID }, hotelRoom);
         }
@@ -131,28 +101,11 @@ namespace Lab12RelationalDatabases.Controllers
         /// <returns>hotelRoom to be deleted</returns>
         // DELETE: api/HotelRooms/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int id)
+        public async Task<ActionResult<HotelRoom>> DeleteHotelRoom(int hotelId, int roomNumber)
         {
-            var hotelRoom = await _context.HotelRooms.FindAsync(id);
-            if (hotelRoom == null)
-            {
-                return NotFound();
-            }
+            await _context.RemoveHotelRoom(hotelId, roomNumber);
 
-            _context.HotelRooms.Remove(hotelRoom);
-            await _context.SaveChangesAsync();
-
-            return hotelRoom;
-        }
-
-        /// <summary>
-        /// Boolean method to see if hotelRoom exist
-        /// </summary>
-        /// <param name="id">integer ID</param>
-        /// <returns>true or false</returns>
-        private bool HotelRoomExists(int id)
-        {
-            return _context.HotelRooms.Any(e => e.HotelID == id);
+            return NoContent();
         }
     }
 }

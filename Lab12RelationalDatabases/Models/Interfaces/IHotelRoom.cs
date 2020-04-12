@@ -20,16 +20,11 @@ namespace Lab12RelationalDatabases.Models.Interfaces
         //get all hotelrooms in a single hotel
         Task<List<HotelRoomDTO>> GetAllHotelRoomsByHotel(int hotelId);
 
-        //get a single hotel room
-        Task<HotelRoomDTO> GetHotelRoomByID(int hotelId, int roomnumber);
+        //get by room number
+        Task<HotelRoomDTO> GetHotelRoomByRoomNumber(int hotelID, int RoomNumber);
 
         //delete  a hotel room
         Task RemoveHotelRoom(int hotelId, int roomNumber);
-
-        //get by room number
-        Task<HotelRoom> GetHotelRoomByRoomNumber(int hotelID, int RoomNumber);
-
-
     }
 }
 
