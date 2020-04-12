@@ -52,15 +52,24 @@ namespace Lab12RelationalDatabases.Models.Services
                 RoomID = hotelRoomDTO.RoomId,
                 PetFriendly = hotelRoomDTO.PetFriendly,
                 Rate = hotelRoomDTO.Rate,
+                Room = new Room()
+                {
+                    ID = hotelRoomDTO.Room.Id,
+                    Name = hotelRoomDTO.Room.Name,
+                    Layout = (Layout)Enum.Parse(typeof(Layout), hotelRoomDTO.Room.Layout)
+                    //line below not implementable
+                    //RoomAmenities = await GetRoomAmenities(roomDTO.Id),
+                    //dont know what HotelRoom is looking for
+                }
+            //requires the ConvertFromDTO method applicable on the interface
+            //Room = _rooms.ConvertFromDTO(hotelRoomDTO.Room),
 
-                //following line requires ConvertFromDTO method for rooms
-                //Room = hotelRoomDTO.Room, 
+            //following line require ConvertFromDTO method for hotels
+            //also requires it on the interface
+            //Hotel = await _hotels.GetHotelByID(hotelRoomDTO.HotelId)
 
-                //following line require ConvertFromDTO method for hotels
-                //Hotel = await _hotels.GetHotelByID(hotelRoomDTO.HotelId)
-
-                //once these lines are re-added, the method will need to be changed to async and return a Task<HotelRoom>
-                //all references to this method will also need to be await calls
+            //once these lines are re-added, the method will need to be changed to async and return a Task<HotelRoom>
+            //all references to this method will also need to be await calls
             };
             return hotelRoom;
         }
