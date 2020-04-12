@@ -51,8 +51,21 @@ namespace Lab12RelationalDatabases.Controllers
             {
                 return NotFound();
             }
+            else
+            {
+                HotelRoomDTO returnRoom = new HotelRoomDTO()
+                {
+                    HotelId = hotelRoom.HotelID,
+                    RoomNumber = hotelRoom.RoomNumber,
+                    Rate = hotelRoom.Rate,
+                    PetFriendly = hotelRoom.PetFriendly,
+                    RoomId = hotelRoom.RoomID,
+                    //Room = await _roomData.GetRoomByID(room.RoomID)
 
-            return hotelRoom;
+                };
+                
+                return returnRoom;
+            }
         }
 
         /// <summary>
