@@ -33,7 +33,9 @@ namespace Lab12RelationalDatabases
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContext<AsyncHotelsDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            /*string connectionString = Environment.IsDevelopment() ? Configuration["ConnectionStrings:DefaultConnection"] : Configuration["ConnectionStrings:ProductionConnection"];
+            services.AddDbContext<AsyncHotelsDbContext>(options => options.UseSqlServer(connectionString));*/
+            services.AddDbContext<AsyncHotelsDbContext>(options => options.UseSqlServer(Configuration["ProductionConnection"]));
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
