@@ -30,6 +30,19 @@ namespace Lab12RelationalDatabases.Models.Services
             return room;
         }
 
+        public async Task<Room> ConvertFromDTO(RoomDTO roomDTO)
+        {
+            Room room = new Room()
+            {
+                ID = roomDTO.Id,
+                Name = roomDTO.Name,
+                Layout = (Layout) Enum.Parse(typeof(Layout), roomDTO.Layout),
+                RoomAmenities = await GetRoomAmenities(roomDTO.Id),
+                //dont know what HotelRoom is looking for
+            };
+            return room;
+        }
+
         public async Task<List<RoomDTO>> GetAllRooms()
         {
             var allRooms = await _context.Rooms.ToListAsync();
@@ -52,14 +65,12 @@ namespace Lab12RelationalDatabases.Models.Services
             return allDTOrooms;
         }
 
-    
+        //
+        //make a call out to bring in amenities interface
+        //make a new list
+        //
 
-    //
-    //make a call out to bring in amenities interface
-    //make a new list
-    //
-
-    public async Task<RoomDTO> GetRoomByID(int roomId)
+        public async Task<RoomDTO> GetRoomByID(int roomId)
         {
             var room = await _context.Rooms.FindAsync(roomId);
             List<AmenitiesDTO> roomAmenityDTO = new List<AmenitiesDTO>();
@@ -79,7 +90,7 @@ namespace Lab12RelationalDatabases.Models.Services
                 Name = room.Name,
                 Layout = room.Layout.ToString(),
                 Amenities = roomAmenityDTO
-        };
+            };
             return roomDto;
         }
 
